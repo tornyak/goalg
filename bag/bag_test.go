@@ -1,6 +1,7 @@
 package bag
 
 import (
+	"github.com/tornyak/goalg/util"
 	"testing"
 	"time"
 )
@@ -12,12 +13,16 @@ func TestBag(t *testing.T) {
 	testAddDifferentTypes(t)
 	testIterateEmpty(t)
 	testIterateOne(t)
+	testIterateMultiple(t)
 }
 
 func testCreateEmpty(t *testing.T) {
 	b := New()
 	if !b.IsEmpty() {
-		t.Error("testCreateEmpty: bag not empty")
+		t.Error(util.GetFuncName(), ":bag not empty")
+	}
+	if b.Size() != 0 {
+		t.Errorf("%q size expected 0 received %d", util.GetFuncName(), b.Size())
 	}
 }
 
@@ -79,9 +84,27 @@ func testIterateOne(t *testing.T) {
 }
 
 func testIterateMultiple(t *testing.T) {
-	t.Fail()
-}
+	b := New()
+	cities := map[string]int{
+		"New York":  1,
+		"Stockholm": 1,
+		"London":    1,
+		"Paris":     1}
 
-func testIterateDifferentTypes(t *testing.T) {
-	t.Fail()
+	for city := range cities {
+		b.Add(city)
+	}
+
+	it := b.GetIterator()
+	for it.Next() {
+		city := it.Value().(string)
+		cities[city]--
+	}
+
+	// Test that all cities in map were found
+	for city, count := range cities {
+		if count != 0 {
+			t.Errorf("testIterateMultiple: count for city %q is %d instead of 0", city, count)
+		}
+	}
 }
