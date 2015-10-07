@@ -12,7 +12,7 @@ type element struct {
 type Queue struct {
 	first *element
 	last  *element
-	size  uint
+	size  int
 }
 
 // Iterator data structure
@@ -87,7 +87,7 @@ func (q *Queue) IsEmpty() bool {
 }
 
 // Size returns number of items in the Queue
-func (q *Queue) Size() uint {
+func (q *Queue) Size() int {
 	return q.size
 }
 
