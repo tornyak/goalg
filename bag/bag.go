@@ -14,13 +14,16 @@ type Element struct {
 // A Bag structure
 type Bag struct {
 	first *Element
-	size  uint
+	size  int
 }
 
+// Iterator data structure
 type Iterator struct {
 	current *Element
 }
 
+// Next moves iterator to the next element in collection
+// if it exists and returns true, othewise it just returns false
 func (it *Iterator) Next() bool {
 	if it.current != nil {
 		it.current = it.current.next
@@ -31,6 +34,8 @@ func (it *Iterator) Next() bool {
 	return true
 }
 
+// Value returns the value of the current element or nil
+// if current element is nil
 func (it *Iterator) Value() interface{} {
 	if it.current != nil {
 		return it.current.Value
@@ -60,7 +65,7 @@ func (b *Bag) IsEmpty() bool {
 }
 
 // Size returns number of items in the Bag
-func (b *Bag) Size() uint {
+func (b *Bag) Size() int {
 	return b.size
 }
 
