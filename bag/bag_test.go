@@ -1,9 +1,11 @@
 package bag
 
 import (
-	"github.com/tornyak/goalg/util"
 	"testing"
 	"time"
+
+	"github.com/stretchr/testify/assert"
+	"github.com/tornyak/goalg/util"
 )
 
 func TestBag(t *testing.T) {
@@ -18,56 +20,35 @@ func TestBag(t *testing.T) {
 
 func testCreateEmpty(t *testing.T) {
 	b := New()
-	if !b.IsEmpty() {
-		t.Error(util.GetFuncName(), ":bag not empty")
-	}
-	if b.Size() != 0 {
-		t.Errorf("%q size expected 0 received %d", util.GetFuncName(), b.Size())
-	}
+	assert.True(t, b.IsEmpty(), "bag not empty")
+	assert.Equal(t, 0, b.Size(), util.GetFuncName()+" :wrong size")
 }
 
 func testAddOne(t *testing.T) {
 	b := New()
-
 	b.Add("Hello")
-	if b.Size() != 1 {
-		t.Errorf("TestBagSize expected 1 received %d", b.Size())
-	}
+	assert.Equal(t, 1, b.Size(), util.GetFuncName()+" :wrong size")
 }
 
 func testAddMultiple(t *testing.T) {
 	b := New()
-	b.Add("New York")
-	b.Add("Stockholm")
-	b.Add("London")
-	b.Add("Paris")
-	if b.Size() != 4 {
-		t.Errorf("testAddMultiple expected 4 received %d", b.Size())
-	}
-	if b.IsEmpty() {
-		t.Error("testAddMultiple: bag is empty")
-	}
+	b.Add("New York", "Stockholm", "London", "Paris")
+	assert.Equal(t, 4, b.Size(), util.GetFuncName()+" :wrong size")
+	assert.False(t, b.IsEmpty(), util.GetFuncName()+" :bag empty")
 }
 
 func testAddDifferentTypes(t *testing.T) {
 	b := New()
-	b.Add("New York")
-	b.Add(1.23)
-	b.Add(time.Now())
-	b.Add([]int{1, 2, 3})
-	if b.Size() != 4 {
-		t.Errorf("testAddMultiple expected 4 received %d", b.Size())
-	}
-	if b.IsEmpty() {
-		t.Error("testAddMultiple: bag is empty")
-	}
+	b.Add("New York", 1.23, time.Now(), []int{1, 2, 3})
+	assert.Equal(t, 4, b.Size(), util.GetFuncName()+" :wrong size")
+	assert.False(t, b.IsEmpty(), util.GetFuncName()+" :bag empty")
 }
 
 func testIterateEmpty(t *testing.T) {
 	b := New()
 	it := b.GetIterator()
 	for it.Next() {
-		t.Error("Iterator should not have next element")
+		t.Errorf("%q Iterator should not have next element", util.GetFuncName())
 	}
 }
 
@@ -78,7 +59,7 @@ func testIterateOne(t *testing.T) {
 	for it.Next() {
 		v := it.Value().(int)
 		if v != 5 {
-			t.Errorf("Expected value was 5 received %d", v)
+			t.Errorf("%q expected value was 5 received %d", util.GetFuncName(), v)
 		}
 	}
 }
@@ -95,8 +76,7 @@ func testIterateMultiple(t *testing.T) {
 		b.Add(city)
 	}
 
-	it := b.GetIterator()
-	for it.Next() {
+	for it := b.GetIterator(); it.Next(); {
 		city := it.Value().(string)
 		cities[city]--
 	}
@@ -104,7 +84,16 @@ func testIterateMultiple(t *testing.T) {
 	// Test that all cities in map were found
 	for city, count := range cities {
 		if count != 0 {
-			t.Errorf("testIterateMultiple: count for city %q is %d instead of 0", city, count)
+			t.Errorf("%q count for city %q is %d instead of 0", util.GetFuncName(), city, count)
 		}
+	}
+}
+
+func testEmptyIteratorGetValue(t *testing.T) {
+	b := New()
+	it := b.GetIterator()
+
+	if v := it.Value(); v != nil {
+		t.Errorf("%q empty iterator did not return nil but %v", util.GetFuncName(), v)
 	}
 }

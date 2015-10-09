@@ -39,21 +39,22 @@ func (it *Iterator) Next() bool {
 func (it *Iterator) Value() interface{} {
 	if it.current != nil {
 		return it.current.Value
-	} else {
-		return nil
+	}
+	return nil
+}
+
+// New creates a new empty bag and returns a pointer to it
+func New() *Bag { return new(Bag) }
+
+// Add items to the bag
+func (b *Bag) Add(v ...interface{}) {
+	for _, item := range v {
+		b.add(item)
 	}
 }
 
-func New() *Bag { return new(Bag).init() }
-
-func (b *Bag) init() *Bag {
-	b.first = nil
-	b.size = 0
-	return b
-}
-
 // Add an item to the bag
-func (b *Bag) Add(v interface{}) {
+func (b *Bag) add(v interface{}) {
 	e := &Element{b.first, v}
 	b.first = e
 	b.size++
