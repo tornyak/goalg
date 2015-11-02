@@ -1,0 +1,20 @@
+mode: set
+github.com/tornyak/goalg/bag/linked_bag.go:22.32,22.57 1 1
+github.com/tornyak/goalg/bag/linked_bag.go:25.40,29.2 3 1
+github.com/tornyak/goalg/bag/linked_bag.go:32.36,34.2 1 1
+github.com/tornyak/goalg/bag/linked_bag.go:37.32,39.2 1 1
+github.com/tornyak/goalg/bag/linked_bag.go:42.44,46.2 3 1
+github.com/tornyak/goalg/bag/linked_bag.go:50.45,52.2 1 1
+github.com/tornyak/goalg/bag/linked_bag.go:56.49,57.23 1 1
+github.com/tornyak/goalg/bag/linked_bag.go:62.2,62.12 1 0
+github.com/tornyak/goalg/bag/linked_bag.go:57.23,61.3 3 1
+github.com/tornyak/goalg/bag/linked_bag.go:66.39,66.41 0 0
+github.com/tornyak/goalg/bag/linked_random_bag.go:11.44,11.75 1 1
+github.com/tornyak/goalg/bag/linked_random_bag.go:14.77,18.19 4 1
+github.com/tornyak/goalg/bag/linked_random_bag.go:21.2,22.17 2 1
+github.com/tornyak/goalg/bag/linked_random_bag.go:18.19,20.3 1 1
+github.com/tornyak/goalg/bag/linked_random_bag.go:34.51,36.2 1 1
+github.com/tornyak/goalg/bag/linked_random_bag.go:40.55,41.35 1 1
+github.com/tornyak/goalg/bag/linked_random_bag.go:46.2,46.12 1 0
+github.com/tornyak/goalg/bag/linked_random_bag.go:41.35,45.3 3 1
+github.com/tornyak/goalg/bag/linked_random_bag.go:50.45,50.47 0 0

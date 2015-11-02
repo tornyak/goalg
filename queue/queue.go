@@ -41,15 +41,8 @@ func (it *Iterator) Value() interface{} {
 	return nil
 }
 
-// New creates an empty Queue and returns pointer to it
-func New() *Queue { return new(Queue).init() }
-
-func (q *Queue) init() *Queue {
-	q.first = nil
-	q.last = nil
-	q.size = 0
-	return q
-}
+// NewQueue creates an empty Queue and returns pointer to it
+func NewQueue() *Queue { return new(Queue) }
 
 // Enqueue adds item v to the end of the Queue
 func (q *Queue) Enqueue(v interface{}) {

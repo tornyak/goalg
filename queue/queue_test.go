@@ -17,7 +17,7 @@ func TestQueue(t *testing.T) {
 }
 
 func testCreateEmpty(t *testing.T) {
-	q := New()
+	q := NewQueue()
 	if !q.IsEmpty() {
 		t.Error(util.GetFuncName(), ":Queue not empty")
 	}
@@ -27,7 +27,7 @@ func testCreateEmpty(t *testing.T) {
 }
 
 func testQueueDequeueOne(t *testing.T) {
-	q := New()
+	q := NewQueue()
 	expected := "Stockholm"
 	q.Enqueue(expected)
 	if q.IsEmpty() {
@@ -46,7 +46,7 @@ func testQueueDequeueOne(t *testing.T) {
 }
 
 func testQueueDequeueMultiple(t *testing.T) {
-	q := New()
+	q := NewQueue()
 	cities := []string{"New York", "Stockholm", "Paris", "London"}
 	for _, city := range cities {
 		q.Enqueue(city)

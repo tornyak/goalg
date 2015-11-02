@@ -5,73 +5,19 @@
 // The order of iteration is unspecified and should be immaterial to the client.
 package bag
 
-// Element is an element of the Bag
-type Element struct {
-	next  *Element
-	Value interface{}
+// Bag interface that different Bag
+// implementations must implement
+type Bag interface {
+	Push()
+	Pop() interface{}
+	IsEmpty() bool
+	Size() int
 }
 
-// A Bag structure
-type Bag struct {
-	first *Element
-	size  int
-}
-
-// Iterator data structure
-type Iterator struct {
-	current *Element
-}
-
-// Next moves iterator to the next element in collection
-// if it exists and returns true, othewise it just returns false
-func (it *Iterator) Next() bool {
-	if it.current != nil {
-		it.current = it.current.next
-	}
-	if it.current == nil {
-		return false
-	}
-	return true
-}
-
-// Value returns the value of the current element or nil
-// if current element is nil
-func (it *Iterator) Value() interface{} {
-	if it.current != nil {
-		return it.current.Value
-	} else {
-		return nil
-	}
-}
-
-func New() *Bag { return new(Bag).init() }
-
-func (b *Bag) init() *Bag {
-	b.first = nil
-	b.size = 0
-	return b
-}
-
-// Add an item to the bag
-func (b *Bag) Add(v interface{}) {
-	e := &Element{b.first, v}
-	b.first = e
-	b.size++
-}
-
-// IsEmpty returns true if the Bag is empty, othewise false
-func (b *Bag) IsEmpty() bool {
-	return b.size == 0
-}
-
-// Size returns number of items in the Bag
-func (b *Bag) Size() int {
-	return b.size
-}
-
-func (b *Bag) GetIterator() *Iterator {
-	it := new(Iterator)
-	it.current = new(Element)
-	it.current.next = b.first
-	return it
+// Iterable defines interface that collection
+// iterator has to implement
+type Iterable interface {
+	HasNext() bool
+	Next() interface{}
+	Remove()
 }
