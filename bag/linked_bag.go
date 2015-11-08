@@ -52,7 +52,7 @@ func (it *LinkedBagIterator) HasNext() bool {
 }
 
 // Next returns the value of the next element. If there is no
-// next element error is set
+// next element nil is returned
 func (it *LinkedBagIterator) Next() interface{} {
 	if it.current != nil {
 		curr := it.current
@@ -61,6 +61,3 @@ func (it *LinkedBagIterator) Next() interface{} {
 	}
 	return nil
 }
-
-// Remove is not supported for the Bag
-func (it *LinkedBagIterator) Remove() {}

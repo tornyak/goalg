@@ -8,10 +8,10 @@ package bag
 // Bag interface that different Bag
 // implementations must implement
 type Bag interface {
-	Push()
-	Pop() interface{}
+	Add(interface{})
 	IsEmpty() bool
 	Size() int
+	GetIterator() Iterable
 }
 
 // Iterable defines interface that collection
@@ -19,5 +19,4 @@ type Bag interface {
 type Iterable interface {
 	HasNext() bool
 	Next() interface{}
-	Remove()
 }

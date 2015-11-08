@@ -88,18 +88,3 @@ func TestLinkedBagIterateNextNil(t *testing.T) {
 	}
 	assert.Nil(t, it.Next(), "Next should have returned nil")
 }
-
-func TestLinkedBagIterateRemove(t *testing.T) {
-	b := NewLinkedBag()
-	b.Add(5)
-	it := b.GetIterator()
-	for it.HasNext() {
-		it.Next()
-		it.Remove()
-	}
-	it = b.GetIterator()
-	for it.HasNext() {
-		v := it.Next().(int)
-		assert.Equal(t, 5, v, "Iterator returned wrong value")
-	}
-}

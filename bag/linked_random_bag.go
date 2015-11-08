@@ -45,6 +45,3 @@ func (it *LinkedRandomBagIterator) Next() interface{} {
 	}
 	return nil
 }
-
-// Remove is not supported for the Bag
-func (it *LinkedRandomBagIterator) Remove() {}
