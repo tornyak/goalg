@@ -5,7 +5,7 @@ package stack
 // Stack interface that different Stack
 // implementations must implement
 type Stack interface {
-	Push()
+	Push(interface{})
 	Pop() interface{}
 	IsEmpty() bool
 	Size() int
