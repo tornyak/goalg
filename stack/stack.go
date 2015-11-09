@@ -9,6 +9,7 @@ type Stack interface {
 	Pop() interface{}
 	IsEmpty() bool
 	Size() int
+	GetIterator() Iterable
 }
 
 // Iterable defines interface that collection

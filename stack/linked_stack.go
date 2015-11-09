@@ -18,7 +18,7 @@ type LinkedStackIterator struct {
 }
 
 // NewLinkedStack creates an empty Stack and returns pointer to it
-func NewLinkedStack() *LinkedStack { return new(LinkedStack) }
+func NewLinkedStack() Stack { return new(LinkedStack) }
 
 // Push adds item v to the top of the Stack
 func (s *LinkedStack) Push(v interface{}) {

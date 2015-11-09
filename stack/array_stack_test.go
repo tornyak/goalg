@@ -50,7 +50,7 @@ func TestArrayStackPopEmpty(t *testing.T) {
 }
 
 func TestArrayStackResize(t *testing.T) {
-	s := NewArrayStack()
+	s := NewArrayStack().(*ArrayStack)
 	assert.Equal(t, 1, cap(s.a), "Stack created with wrong capacity")
 	cities := []string{"New York", "Stockholm", "Paris", "London", "Tokyo"}
 	for _, city := range cities {
@@ -63,43 +63,43 @@ func TestArrayStackResize(t *testing.T) {
 	assert.Equal(t, 2, cap(s.a), "Stack - resized with wrong capacity")
 }
 
-// func TestArrayStackIterateEmpty(t *testing.T) {
-// 	s := NewArrayStack()
-// 	it := s.GetIterator()
-// 	assert.Nil(t, it.Next(), "Iterator Next() returned wrong value")
-// }
-//
-// func TestArrayStackIterateOne(t *testing.T) {
-// 	s := NewArrayStack()
-// 	e := "New York"
-// 	s.Push(e)
-// 	it := s.GetIterator()
-// 	assert.Equal(t, e, it.Next(), "Iterator Next() returned wrong value")
-// }
-//
-// func TestArrayStackIterateMultiple(t *testing.T) {
-// 	s := NewArrayStack()
-// 	cities := []string{"New York", "Stockholm", "Paris", "London"}
-// 	for _, city := range cities {
-// 		s.Push(city)
-// 	}
-// 	it := s.GetIterator()
-// 	i := len(cities) - 1
-// 	for it.HasNext() {
-// 		assert.Equal(t, cities[i], it.Next(), "Iterator Next() returned wrong value")
-// 		i--
-// 	}
-// }
-//
-// func TestArrayStackIterateNextNil(t *testing.T) {
-// 	s := NewArrayStack()
-// 	cities := []string{"New York", "Stockholm", "Paris"}
-// 	for _, city := range cities {
-// 		s.Push(city)
-// 	}
-// 	it := s.GetIterator()
-// 	for it.HasNext() {
-// 		it.Next()
-// 	}
-// 	assert.Nil(t, it.Next(), "Iterator Next() returned wrong value")
-// }
+func TestArrayStackIterateEmpty(t *testing.T) {
+	s := NewArrayStack()
+	it := s.GetIterator()
+	assert.Nil(t, it.Next(), "Iterator Next() returned wrong value")
+}
+
+func TestArrayStackIterateOne(t *testing.T) {
+	s := NewArrayStack()
+	e := "New York"
+	s.Push(e)
+	it := s.GetIterator()
+	assert.Equal(t, e, it.Next(), "Iterator Next() returned wrong value")
+}
+
+func TestArrayStackIterateMultiple(t *testing.T) {
+	s := NewArrayStack()
+	cities := []string{"New York", "Stockholm", "Paris", "London"}
+	for _, city := range cities {
+		s.Push(city)
+	}
+	it := s.GetIterator()
+	i := len(cities) - 1
+	for it.HasNext() {
+		assert.Equal(t, cities[i], it.Next(), "Iterator Next() returned wrong value")
+		i--
+	}
+}
+
+func TestArrayStackIterateNextNil(t *testing.T) {
+	s := NewArrayStack()
+	cities := []string{"New York", "Stockholm", "Paris"}
+	for _, city := range cities {
+		s.Push(city)
+	}
+	it := s.GetIterator()
+	for it.HasNext() {
+		it.Next()
+	}
+	assert.Nil(t, it.Next(), "Iterator Next() returned wrong value")
+}

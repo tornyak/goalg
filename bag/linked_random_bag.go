@@ -1,5 +1,7 @@
 package bag
 
+import "github.com/tornyak/goalg/util"
+
 // LinkedRandomBag is a Bag where iterator provides
 // elements in random order. All permutations are
 // equaly probable
@@ -8,10 +10,10 @@ type LinkedRandomBag struct {
 }
 
 // NewLinkedRandomBag creates an empty LinkedBag and returns pointer to it
-func NewLinkedRandomBag() *LinkedRandomBag { return new(LinkedRandomBag) }
+func NewLinkedRandomBag() Bag { return new(LinkedRandomBag) }
 
 // GetIterator returns a Bag iterator
-func (b *LinkedRandomBag) GetIterator(shuffle func([]interface{})) Iterable {
+func (b *LinkedRandomBag) getIterator(shuffle func([]interface{})) Iterable {
 	randomIt := new(LinkedRandomBagIterator)
 	randomIt.elements = make([]interface{}, 0)
 	it := b.LinkedBag.GetIterator()
@@ -20,6 +22,12 @@ func (b *LinkedRandomBag) GetIterator(shuffle func([]interface{})) Iterable {
 	}
 	shuffle(randomIt.elements)
 	return randomIt
+}
+
+// GetIterator returns a Bag iterator using default shuffling
+// function based on Fisher-Yates (Knuth) shuffle
+func (b *LinkedRandomBag) GetIterator() Iterable {
+	return b.getIterator(util.Shuffle)
 }
 
 // LinkedRandomBagIterator data structure

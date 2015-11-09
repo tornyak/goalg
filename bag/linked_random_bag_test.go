@@ -41,14 +41,14 @@ func TestLinkedRandomBagAddDifferentTypes(t *testing.T) {
 
 func TestLinkedRandomBagIterateEmpty(t *testing.T) {
 	b := NewLinkedRandomBag()
-	it := b.GetIterator(func([]interface{}) {})
+	it := b.GetIterator()
 	assert.False(t, it.HasNext(), "Iterator should not have next element")
 }
 
 func TestLinkedRandomBagIterateOne(t *testing.T) {
 	b := NewLinkedRandomBag()
 	b.Add(5)
-	it := b.GetIterator(func([]interface{}) {})
+	it := b.GetIterator()
 	for it.HasNext() {
 		v := it.Next().(int)
 		assert.Equal(t, 5, v, "Iterator returned wrong value")
@@ -56,7 +56,7 @@ func TestLinkedRandomBagIterateOne(t *testing.T) {
 }
 
 func TestLinkedRandomBagIterateMultiple(t *testing.T) {
-	b := NewLinkedRandomBag()
+	b := NewLinkedRandomBag().(*LinkedRandomBag)
 	cities := []string{
 		"NewBag York",
 		"Stockholm",
@@ -71,14 +71,14 @@ func TestLinkedRandomBagIterateMultiple(t *testing.T) {
 	var it2Cities []interface{}
 
 	// 1st iterator will not shuffle
-	it := b.GetIterator(func([]interface{}) {})
+	it := b.getIterator(func([]interface{}) {})
 	for it.HasNext() {
 		city := it.Next().(string)
 		it1Cities = append(it1Cities, city)
 	}
 
 	// 2nd iterator shold return elements in reverse order
-	it = b.GetIterator(util.Reverse)
+	it = b.getIterator(util.Reverse)
 	for it.HasNext() {
 		city := it.Next().(string)
 		it2Cities = append(it2Cities, city)
@@ -91,7 +91,7 @@ func TestLinkedRandomBagIterateMultiple(t *testing.T) {
 func TestLinkedRandomBagIterateNextNil(t *testing.T) {
 	b := NewLinkedRandomBag()
 	b.Add(5)
-	it := b.GetIterator(func([]interface{}) {})
+	it := b.GetIterator()
 	for it.HasNext() {
 		v := it.Next().(int)
 		assert.Equal(t, 5, v, "Iterator returned wrong value")

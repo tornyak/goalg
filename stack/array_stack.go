@@ -7,6 +7,12 @@ type ArrayStack struct {
 	a    []interface{}
 }
 
+// ArrayStackIterator is iterator for ArrayStack
+type ArrayStackIterator struct {
+	current int
+	a       []interface{}
+}
+
 // resize creates a new slice of size max and
 // copies all data from a into it and replaces a with the new slice
 func (s *ArrayStack) resize(max int) {
@@ -17,7 +23,7 @@ func (s *ArrayStack) resize(max int) {
 
 // NewArrayStack creates and returns new
 // ArrayStack data structure of capacity 1
-func NewArrayStack() *ArrayStack {
+func NewArrayStack() Stack {
 	s := &ArrayStack{
 		a: make([]interface{}, 1),
 	}
@@ -56,4 +62,29 @@ func (s *ArrayStack) Pop() interface{} {
 // Size returns number of items in the Stack
 func (s *ArrayStack) Size() int {
 	return s.size
+}
+
+// GetIterator returns a Stack iterator
+func (s *ArrayStack) GetIterator() Iterable {
+	it := &ArrayStackIterator{
+		current: s.Size(),
+		a:       s.a,
+	}
+	return it
+}
+
+// HasNext moves iterator to the next element in collection
+// if it exists and returns true, othewise it just returns false
+func (it *ArrayStackIterator) HasNext() bool {
+	return it.current > 0
+}
+
+// Next returns the value of the next element. If there is no
+// next element nil is returned
+func (it *ArrayStackIterator) Next() interface{} {
+	if it.current > 0 {
+		it.current--
+		return it.a[it.current]
+	}
+	return nil
 }

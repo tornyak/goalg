@@ -19,7 +19,7 @@ type LinkedBagIterator struct {
 }
 
 // NewLinkedBag creates an empty LinkedBag and returns pointer to it
-func NewLinkedBag() *LinkedBag { return new(LinkedBag) }
+func NewLinkedBag() Bag { return new(LinkedBag) }
 
 // Add an item to the bag
 func (b *LinkedBag) Add(v interface{}) {
