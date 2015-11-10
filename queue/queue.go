@@ -8,7 +8,7 @@ type Queue interface {
 	Enqueue(interface{})
 	Dequeue() interface{}
 	IsEmpty() bool
-	Size()
+	Size() int
 	GetIterator() Iterable
 }
 

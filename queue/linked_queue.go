@@ -19,7 +19,7 @@ type LinkedQueueIterator struct {
 }
 
 // NewLinkedQueue creates an empty Queue and returns pointer to it
-func NewLinkedQueue() *LinkedQueue { return new(LinkedQueue) }
+func NewLinkedQueue() Queue { return new(LinkedQueue) }
 
 // Enqueue adds item v to the end of the Queue
 func (q *LinkedQueue) Enqueue(v interface{}) {
