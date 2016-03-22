@@ -31,3 +31,23 @@ func TestReverse(t *testing.T) {
 	assert.Equal(t, expected, input, "Reverse failed for slice with three elements")
 
 }
+
+func TestRemove(t *testing.T)  {
+	tests := []struct{
+		A []interface{}
+		I int
+		E []interface{}
+	}{
+		{A: []interface{}{}, I: 2, E: []interface{}{}},
+		{A: []interface{}{1}, I: -1, E: []interface{}{1}},
+		{A: []interface{}{1}, I: 0, E: []interface{}{}},
+		{A: []interface{}{1,2,3}, I: 0, E: []interface{}{2,3}},
+		{A: []interface{}{1,2,3}, I: 1, E: []interface{}{1,3}},
+		{A: []interface{}{1,2,3}, I: 2, E: []interface{}{1,2}},
+	}
+
+	for id, mTest := range tests {
+		res, _ := Remove([]interface{}(mTest.A), mTest.I)
+		assert.Equal(t, mTest.E,res, "TestRemove, id: %v Remove Fail", id)
+	}
+}
