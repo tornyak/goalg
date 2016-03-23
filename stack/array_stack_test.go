@@ -51,7 +51,7 @@ func TestArrayStackPopEmpty(t *testing.T) {
 
 func TestArrayStackResize(t *testing.T) {
 	s := NewArrayStack().(*ArrayStack)
-	assert.Equal(t, 1, cap(s.a), "Stack created with wrong capacity")
+	assert.Equal(t, 0, cap(s.a), "Stack created with wrong capacity")
 	cities := []string{"New York", "Stockholm", "Paris", "London", "Tokyo"}
 	for _, city := range cities {
 		s.Push(city)
@@ -60,7 +60,7 @@ func TestArrayStackResize(t *testing.T) {
 	for s.Size() > 1 {
 		s.Pop()
 	}
-	assert.Equal(t, 2, cap(s.a), "Stack - resized with wrong capacity")
+	assert.Equal(t, 8, cap(s.a), "Stack - resized with wrong capacity")
 }
 
 func TestArrayStackIterateEmpty(t *testing.T) {

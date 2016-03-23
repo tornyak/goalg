@@ -1,51 +1,58 @@
 package queue
 
 // SliceQueue represents Queue based on slices
-type SliceQueue []interface{}
+type SliceQueue struct {
+	a    []interface{}
+}
 
-// LinkedQueueIterator data structure
+// SliceQueueIterator data structure
 type SliceQueueIterator struct {
 	current int
-	a SliceQueue
+	a []interface{}
 }
 
 // NewSliceQueue creates an empty Queue and returns pointer to it
-func NewSliceQueue() Queue { return make(SliceQueue) }
+func NewSliceQueue() Queue { return &SliceQueue{a: make([]interface{}, 0)} }
 
 // Enqueue adds item v to the end of the Queue
 func (q *SliceQueue) Enqueue(v interface{}) {
-	q = append(q, v)
+	q.a = append(q.a, v)
 }
 
 // Dequeue returns the first item from the queue
 func (q *SliceQueue) Dequeue() interface{} {
-	retValue := q[0]
-	q = q[1:]
+	if(len(q.a) == 0) {
+		return nil
+	}
+	retValue := q.a[0]
+	q.a = q.a[1:]
 	return retValue
 }
 
 // IsEmpty returns true if the Queue is empty, otherwise false
 func (q *SliceQueue) IsEmpty() bool {
-	return len(q) == 0
+	return len(q.a) == 0
 }
 
 // Size returns number of items in the Queue
 func (q *SliceQueue) Size() int {
-	return len(q)
+	return len(q.a)
 }
 
 // GetIterator returns a Queue iterator
 func (q *SliceQueue) GetIterator() Iterable {
+	sliceCopy := make([]interface{}, len(q.a))
+	copy(sliceCopy, q.a)
 	return &SliceQueueIterator{
 		current: 0,
-		a: q[:],
+		a: sliceCopy,
 	}
 }
 
 // HasNext moves iterator to the next element in collection
 // if it exists and returns true, othewise it just returns false
 func (it *SliceQueueIterator) HasNext() bool {
-	return it.current < len(it.a) - 1
+	return it.current < len(it.a)
 }
 
 // Next returns the value of the current element or nil

@@ -6,14 +6,14 @@ import (
 	"github.com/stretchr/testify/assert"
 )
 
-func TestLinkedQueueCreateEmpty(t *testing.T) {
-	q := NewLinkedQueue()
+func TestSliceQueueCreateEmpty(t *testing.T) {
+	q := NewSliceQueue()
 	assert.True(t, q.IsEmpty(), "Stack not empty")
 	assert.Equal(t, q.Size(), 0, "Wrong queue size")
 }
 
-func TestLinkedQueueEnqueueDequeueOne(t *testing.T) {
-	q := NewLinkedQueue()
+func TestSliceQueueEnqueueDequeueOne(t *testing.T) {
+	q := NewSliceQueue()
 	expected := "Stockholm"
 	q.Enqueue(expected)
 	assert.False(t, q.IsEmpty(), "Queue empty")
@@ -23,8 +23,8 @@ func TestLinkedQueueEnqueueDequeueOne(t *testing.T) {
 	assert.Equal(t, expected, e, "Dequeue returned wrong element")
 }
 
-func TestLinkedQueueDequeueMultiple(t *testing.T) {
-	q := NewLinkedQueue()
+func TestSliceQueueDequeueMultiple(t *testing.T) {
+	q := NewSliceQueue()
 	cities := []string{"New York", "Stockholm", "Paris", "London"}
 	for _, city := range cities {
 		q.Enqueue(city)
@@ -44,28 +44,28 @@ func TestLinkedQueueDequeueMultiple(t *testing.T) {
 	assert.Equal(t, newCity, city, "Dequeue returned wrong element")
 }
 
-func TestLinkedQueueDequeueEmpty(t *testing.T) {
-	q := NewLinkedQueue()
+func TestSliceQueueDequeueEmpty(t *testing.T) {
+	q := NewSliceQueue()
 	e := q.Dequeue()
 	assert.Nil(t, e)
 }
 
-func TestLinkedQueueIterateEmpty(t *testing.T) {
-	q := NewLinkedQueue()
+func TestSliceQueueIterateEmpty(t *testing.T) {
+	q := NewSliceQueue()
 	it := q.GetIterator()
 	assert.Nil(t, it.Next(), "Iterator Next() returned wrong value")
 }
 
-func TestLinkedQueueIterateOne(t *testing.T) {
-	q := NewLinkedQueue()
+func TestSliceQueueIterateOne(t *testing.T) {
+	q := NewSliceQueue()
 	e := "New York"
 	q.Enqueue(e)
 	it := q.GetIterator()
 	assert.Equal(t, e, it.Next(), "Iterator Next() returned wrong value")
 }
 
-func TestLinkedQueueIterateMultiple(t *testing.T) {
-	q := NewLinkedQueue()
+func TestSliceQueueIterateMultiple(t *testing.T) {
+	q := NewSliceQueue()
 	cities := []string{"New York", "Stockholm", "Paris", "London"}
 	for _, city := range cities {
 		q.Enqueue(city)
@@ -78,8 +78,8 @@ func TestLinkedQueueIterateMultiple(t *testing.T) {
 	}
 }
 
-func TestLinkedQueueIterateNextNil(t *testing.T) {
-	q := NewLinkedQueue()
+func TestSliceQueueIterateNextNil(t *testing.T) {
+	q := NewSliceQueue()
 	cities := []string{"New York", "Stockholm", "Paris"}
 	for _, city := range cities {
 		q.Enqueue(city)
