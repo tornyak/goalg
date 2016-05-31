@@ -3,7 +3,6 @@ package stack
 // ArrayStack is stack implementation where data is stored in slice
 // Since slices inherently support resizing implementation is simple
 type ArrayStack struct {
-	size int
 	a    []interface{}
 }
 
@@ -13,64 +12,46 @@ type ArrayStackIterator struct {
 	a       []interface{}
 }
 
-// resize creates a new slice of size max and
-// copies all data from a into it and replaces a with the new slice
-func (s *ArrayStack) resize(max int) {
-	newA := make([]interface{}, max)
-	copy(newA, s.a)
-	s.a = newA
-}
-
 // NewArrayStack creates and returns new
 // ArrayStack data structure of capacity 1
 func NewArrayStack() Stack {
-	s := &ArrayStack{
-		a: make([]interface{}, 1),
+	return &ArrayStack{
+		a: make([]interface{}, 0),
 	}
-	return s
 }
 
 // IsEmpty returns true if the Stack is empty, othewise false
 func (s *ArrayStack) IsEmpty() bool {
-	return s.size == 0
+	return len(s.a) == 0
 }
 
 // Push adds item e to the top of the Stack
 func (s *ArrayStack) Push(e interface{}) {
-	if s.size == cap(s.a) {
-		s.resize(s.size * 2)
-	}
-	s.a[s.size] = e
-	s.size++
+	s.a = append(s.a, e)
 }
 
 // Pop the item from the top of the stack. Return nil
 // if stack is empty
 func (s *ArrayStack) Pop() interface{} {
-	if s.Size() == 0 {
+	if len(s.a) == 0 {
 		return nil
 	}
-	s.size--
-	e := s.a[s.size]
-	s.a[s.size] = nil
-	if s.size > 0 && s.size == cap(s.a)/4 {
-		s.resize(cap(s.a) / 2)
-	}
+	e := s.a[len(s.a)-1]
+	s.a = s.a[:len(s.a)-1]
 	return e
 }
 
 // Size returns number of items in the Stack
 func (s *ArrayStack) Size() int {
-	return s.size
+	return len(s.a)
 }
 
 // GetIterator returns a Stack iterator
 func (s *ArrayStack) GetIterator() Iterable {
-	it := &ArrayStackIterator{
+	return &ArrayStackIterator{
 		current: s.Size(),
 		a:       s.a,
 	}
-	return it
 }
 
 // HasNext moves iterator to the next element in collection
