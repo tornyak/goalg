@@ -3,7 +3,7 @@ package stack
 // ArrayStack is stack implementation where data is stored in slice
 // Since slices inherently support resizing implementation is simple
 type ArrayStack struct {
-	a    []interface{}
+	a []interface{}
 }
 
 // ArrayStackIterator is iterator for ArrayStack

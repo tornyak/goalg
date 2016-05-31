@@ -2,13 +2,13 @@ package queue
 
 // SliceQueue represents Queue based on slices
 type SliceQueue struct {
-	a    []interface{}
+	a []interface{}
 }
 
 // SliceQueueIterator data structure
 type SliceQueueIterator struct {
 	current int
-	a []interface{}
+	a       []interface{}
 }
 
 // NewSliceQueue creates an empty Queue and returns pointer to it
@@ -21,7 +21,7 @@ func (q *SliceQueue) Enqueue(v interface{}) {
 
 // Dequeue returns the first item from the queue
 func (q *SliceQueue) Dequeue() interface{} {
-	if(len(q.a) == 0) {
+	if len(q.a) == 0 {
 		return nil
 	}
 	retValue := q.a[0]
@@ -45,7 +45,7 @@ func (q *SliceQueue) GetIterator() Iterable {
 	copy(sliceCopy, q.a)
 	return &SliceQueueIterator{
 		current: 0,
-		a: sliceCopy,
+		a:       sliceCopy,
 	}
 }
 
@@ -65,4 +65,3 @@ func (it *SliceQueueIterator) Next() interface{} {
 	}
 	return nil
 }
-

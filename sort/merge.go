@@ -1,6 +1,6 @@
 package sort
-import "sort"
 
+import "sort"
 
 // BubbleSort implementation
 func MergeSort(data sort.Interface) {
@@ -13,6 +13,5 @@ func MergeSort(data sort.Interface) {
 		}
 	}
 }
-
 
 func merge()

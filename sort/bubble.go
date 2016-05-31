@@ -1,4 +1,5 @@
 package sort
+
 import "sort"
 
 // BubbleSort implementation

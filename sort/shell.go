@@ -1,6 +1,6 @@
 package sort
-import "sort"
 
+import "sort"
 
 // Insertion sort
 func InsertionSort(data sort.Interface) {
@@ -23,10 +23,10 @@ func ShellSort(data sort.Interface) {
 	for h > 0 {
 		// Insertion sort
 		for i := h; i < N; i++ {
-			for j := i; j >= h && data.Less(j, j-h); j-=h {
+			for j := i; j >= h && data.Less(j, j-h); j -= h {
 				data.Swap(j, j-h)
 			}
 		}
-		h = h/3
+		h = h / 3
 	}
 }

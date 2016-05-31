@@ -9,7 +9,6 @@ type Graph interface {
 	Adj(v int) Iterable // Vertices adjacent to v
 }
 
-
 // Digraph is interface that implementation of
 // directed graph should support
 type Digraph interface {
@@ -19,7 +18,6 @@ type Digraph interface {
 	Adj(v int) Iterable // Vertices adjacent to v
 	Reverse()
 }
-
 
 // Iterable defines interface that collection
 // iterator has to implement
