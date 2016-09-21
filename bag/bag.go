@@ -8,15 +8,8 @@ package bag
 // Bag interface that different Bag
 // implementations must implement
 type Bag interface {
-	Add(interface{})
+	Add(...interface{}) Bag
 	IsEmpty() bool
 	Size() int
-	GetIterator() Iterable
-}
-
-// Iterable defines interface that collection
-// iterator has to implement
-type Iterable interface {
-	HasNext() bool
-	Next() interface{}
+	ForEach(func(interface{})) Bag
 }

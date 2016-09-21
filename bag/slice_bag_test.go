@@ -1,20 +1,20 @@
 package bag_test
 
 import (
+	"fmt"
 	"github.com/tornyak/goalg/bag"
 	"testing"
-	"fmt"
 )
 
-func TestRandomBagIsEmpty(t *testing.T) {
+func TestBagIsEmpty(t *testing.T) {
 	var isEmptyTests = []struct {
 		bag      bag.Bag
 		expected bool // expected result
 	}{
-		{bag.RandomList(), true},
-		{bag.RandomList().Add("Hello"), false},
-		{bag.RandomList().Add("New York", "Stockholm", "London", "Paris"), false},
-		{bag.RandomList().Add("New York", 1.23, 1234567890, []int{1, 2, 3}), false},
+		{bag.Slice(), true},
+		{bag.Slice().Add("Hello"), false},
+		{bag.Slice().Add("New York", "Stockholm", "London", "Paris"), false},
+		{bag.Slice().Add("New York", 1.23, 1234567890, []int{1, 2, 3}), false},
 	}
 
 	for _, test := range isEmptyTests {
@@ -24,15 +24,15 @@ func TestRandomBagIsEmpty(t *testing.T) {
 	}
 }
 
-func TestRandomBagSize(t *testing.T) {
+func TestBagSize(t *testing.T) {
 	var sizeTests = []struct {
 		bag      bag.Bag
 		expected int
 	}{
-		{bag.RandomList(), 0},
-		{bag.RandomList().Add("Hello"), 1},
-		{bag.RandomList().Add("New York", "Stockholm", "London", "Paris"), 4},
-		{bag.RandomList().Add("New York", 1.23, 1234567890, []int{1, 2, 3}), 4},
+		{bag.Slice(), 0},
+		{bag.Slice().Add("Hello"), 1},
+		{bag.Slice().Add("New York", "Stockholm", "London", "Paris"), 4},
+		{bag.Slice().Add("New York", 1.23, 1234567890, []int{1, 2, 3}), 4},
 	}
 
 	for _, test := range sizeTests {
@@ -42,20 +42,20 @@ func TestRandomBagSize(t *testing.T) {
 	}
 }
 
-func TestRandomBagForEachEmpty(t *testing.T) {
-	b := bag.RandomList()
-	b.ForEach(func(interface{}){
+func TestForEachEmpty(t *testing.T) {
+	b := bag.Slice()
+	b.ForEach(func(interface{}) {
 		t.Error("Empty bag ForEach called function")
 	})
 }
 
-func TestRandomBagForEachOne(t *testing.T) {
-	b := bag.RandomList().Add(5)
+func TestForEachOne(t *testing.T) {
+	b := bag.Slice().Add(5)
 	i := 0
-	b.ForEach(func(e interface{}){
+	b.ForEach(func(e interface{}) {
 		i++
 		if e != 5 {
-			t.Error("ForEach got wrong element: %v", e)
+			t.Errorf("ForEach got wrong element: %v", e)
 		}
 	})
 	if i != 1 {
@@ -63,8 +63,8 @@ func TestRandomBagForEachOne(t *testing.T) {
 	}
 }
 
-func TestRandomBagForEachMultiple(t *testing.T) {
-	b := bag.RandomList()
+func TestForEachMultiple(t *testing.T) {
+	b := bag.Slice()
 	cities := map[string]int{
 		"NewBag York": 1,
 		"Stockholm":   1,
@@ -87,13 +87,15 @@ func TestRandomBagForEachMultiple(t *testing.T) {
 	}
 }
 
-func TestRandomBagString(t *testing.T) {
+func TestString(t *testing.T) {
 	var sizeTests = []struct {
 		bag      bag.Bag
 		expected string
 	}{
-		{bag.RandomList(), "linked.randomLinkedListBag: []"},
-		{bag.RandomList().Add("Hello"), "linked.randomLinkedListBag: [Hello]"},
+		{bag.Slice(), "bag.sliceBag: []"},
+		{bag.Slice().Add("Hello"), "bag.sliceBag: [Hello]"},
+		{bag.Slice().Add("New York", "Stockholm", "London", "Paris"), "bag.sliceBag: [New York Stockholm London Paris]"},
+		{bag.Slice().Add("New York", 1.23, 1234567890, []int{1, 2, 3}), "bag.sliceBag: [New York 1.23 1234567890 [1 2 3]]"},
 	}
 
 	for _, test := range sizeTests {

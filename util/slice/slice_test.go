@@ -47,7 +47,7 @@ func TestRemove(t *testing.T) {
 	}
 
 	for id, mTest := range tests {
-		res, _ := Remove([]interface{}(mTest.A), mTest.I)
+		res, _ := Delete([]interface{}(mTest.A), mTest.I)
 		assert.Equal(t, mTest.E, res, "TestRemove, id: %v Remove Fail", id)
 	}
 }

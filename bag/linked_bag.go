@@ -1,63 +1,61 @@
 package bag
 
+import (
+	"fmt"
+	"strings"
+	"reflect"
+)
+
 // element is an element of the Bag
 type element struct {
 	next  *element
 	Value interface{}
 }
 
-// LinkedBag structure defines
+// linkedListBag structure defines
 // Bag implemented as a linked list
-type LinkedBag struct {
+type linkedListBag struct {
 	first *element
 	size  int
 }
 
-// LinkedBagIterator data structure
-type LinkedBagIterator struct {
-	current *element
-}
-
 // NewLinkedBag creates an empty LinkedBag and returns pointer to it
-func NewLinkedBag() Bag { return new(LinkedBag) }
+func List() Bag { return new(linkedListBag) }
 
 // Add an item to the bag
-func (b *LinkedBag) Add(v interface{}) {
-	e := &element{b.first, v}
-	b.first = e
-	b.size++
+func (b *linkedListBag) Add(items ...interface{}) Bag {
+	for _, it := range items {
+		e := &element{b.first, it}
+		b.first = e
+		b.size++
+	}
+	return b
 }
 
 // IsEmpty returns true if the Bag is empty, othewise false
-func (b *LinkedBag) IsEmpty() bool {
+func (b *linkedListBag) IsEmpty() bool {
 	return b.size == 0
 }
 
 // Size returns number of items in the Bag
-func (b *LinkedBag) Size() int {
+func (b *linkedListBag) Size() int {
 	return b.size
 }
 
-// GetIterator returns a Bag iterator
-func (b *LinkedBag) GetIterator() Iterable {
-	it := new(LinkedBagIterator)
-	it.current = b.first
-	return it
-}
-
-// HasNext returns true if there is next element of
-// the iterator, othewise it just returns false
-func (it *LinkedBagIterator) HasNext() bool {
-	return it.current != nil
-}
-
-// Next returns the value of the next element. If there is no
-// next element nil is returned
-func (it *LinkedBagIterator) Next() interface{} {
-	if it.current != nil {
-		curr := it.current
-		it.current = it.current.next
-		return curr.Value
+// Size returns number of items in the Bag
+func (b *linkedListBag) ForEach(f func(interface{})) Bag {
+	for e := b.first; e != nil; e = e.next {
+		f(e.Value)
 	}
-	return nil
+	return b
+}
+
+// String returns formatted string representing LinkedBag and its elements
+func (b *linkedListBag) String() string  {
+	t := reflect.TypeOf(b).Elem()
+	ret := fmt.Sprintf("%v: [", t)
+	b.ForEach(func(e interface{}) {
+		ret+= fmt.Sprintf("%v ", e)
+	})
+	return strings.TrimSpace(ret) + "]"
 }
