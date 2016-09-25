@@ -11,10 +11,10 @@ func TestLinkedBagIsEmpty(t *testing.T) {
 		bag      bag.Bag
 		expected bool // expected result
 	}{
-		{bag.List(), true},
-		{bag.List().Add("Hello"), false},
-		{bag.List().Add("New York", "Stockholm", "London", "Paris"), false},
-		{bag.List().Add("New York", 1.23, 1234567890, []int{1, 2, 3}), false},
+		{bag.Linked(), true},
+		{bag.Linked().Add("Hello"), false},
+		{bag.Linked().Add("New York", "Stockholm", "London", "Paris"), false},
+		{bag.Linked().Add("New York", 1.23, 1234567890, []int{1, 2, 3}), false},
 	}
 
 	for _, test := range isEmptyTests {
@@ -30,10 +30,10 @@ func TestLinkedBagSize(t *testing.T) {
 		bag      bag.Bag
 		expected int
 	}{
-		{bag.List(), 0},
-		{bag.List().Add("Hello"), 1},
-		{bag.List().Add("New York", "Stockholm", "London", "Paris"), 4},
-		{bag.List().Add("New York", 1.23, 1234567890, []int{1, 2, 3}), 4},
+		{bag.Linked(), 0},
+		{bag.Linked().Add("Hello"), 1},
+		{bag.Linked().Add("New York", "Stockholm", "London", "Paris"), 4},
+		{bag.Linked().Add("New York", 1.23, 1234567890, []int{1, 2, 3}), 4},
 	}
 
 	for _, test := range sizeTests {
@@ -44,14 +44,14 @@ func TestLinkedBagSize(t *testing.T) {
 }
 
 func TestLinkedBagForEachEmpty(t *testing.T) {
-	b := bag.List()
+	b := bag.Linked()
 	b.ForEach(func(interface{}){
 		t.Error("Empty bag ForEach called function")
 	})
 }
 
 func TestLinkedBagForEachOne(t *testing.T) {
-	b := bag.List().Add(5)
+	b := bag.Linked().Add(5)
 	i := 0
 	b.ForEach(func(e interface{}){
 		i++
@@ -65,7 +65,7 @@ func TestLinkedBagForEachOne(t *testing.T) {
 }
 
 func TestLinkedBagForEachMultiple(t *testing.T) {
-	b := bag.List()
+	b := bag.Linked()
 	cities := map[string]int{
 		"NewBag York": 1,
 		"Stockholm":   1,
@@ -93,10 +93,10 @@ func TestLinkedBagString(t *testing.T) {
 		bag      bag.Bag
 		expected string
 	}{
-		{bag.List(), "bag.linkedListBag: []"},
-		{bag.List().Add("Hello"), "bag.linkedListBag: [Hello]"},
-		{bag.List().Add("New York", "Stockholm", "London", "Paris"), "bag.linkedListBag: [Paris London Stockholm New York]"},
-		{bag.List().Add("New York", 1.23, 1234567890, []int{1, 2, 3}), "bag.linkedListBag: [[1 2 3] 1234567890 1.23 New York]"},
+		{bag.Linked(), "[]"},
+		{bag.Linked().Add("Hello"), "[Hello]"},
+		{bag.Linked().Add("New York", "Stockholm", "London", "Paris"), "[Paris London Stockholm New York]"},
+		{bag.Linked().Add("New York", 1.23, 1234567890, []int{1, 2, 3}), "[[1 2 3] 1234567890 1.23 New York]"},
 	}
 
 	for _, test := range sizeTests {

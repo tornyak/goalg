@@ -2,7 +2,6 @@ package bag
 
 import (
 	"fmt"
-	"reflect"
 )
 
 // sliceBag structure defines
@@ -26,7 +25,7 @@ func (b *sliceBag) Add(items ...interface{}) Bag {
 	return b
 }
 
-// IsEmpty returns true if the Bag is empty, othewise false
+// IsEmpty returns true if the Bag is empty, otherwise false
 func (b *sliceBag) IsEmpty() bool {
 	return len(b.a) == 0
 }
@@ -44,8 +43,7 @@ func (b *sliceBag) ForEach(f func(interface{})) Bag {
 	return b
 }
 
-// String returns formated string representing LinkedBag and its elements
+// String returns formatted string representing sliceBag and its elements
 func (b *sliceBag) String() string  {
-	t := reflect.TypeOf(b).Elem()
-	return fmt.Sprintf("%v: %v", t, b.a)
+	return fmt.Sprintf("%v", b.a)
 }

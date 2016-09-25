@@ -1,7 +1,7 @@
 package bag
 
 import (
-	"github.com/tornyak/goalg/util"
+	"github.com/tornyak/goalg/util/slice"
 	"strings"
 	"fmt"
 )
@@ -15,7 +15,7 @@ type randomLinkedListBag struct {
 
 // RandomList creates an empty Bag backed with linked list whose elements
 // are traversed in random order. Returns a pointer to created Bag
-func RandomList() Bag { return new(randomLinkedListBag) }
+func RandomLinked() Bag { return new(randomLinkedListBag) }
 
 // Add an item to the bag
 func (b *randomLinkedListBag) Add(items ...interface{}) Bag {
@@ -30,7 +30,7 @@ func (b *randomLinkedListBag) ForEach(f func(interface{})) Bag  {
 	for e := b.first; e != nil; e = e.next {
 		tmp = append(tmp, e.Value)
 	}
-	util.Shuffle(tmp)
+	slice.Shuffle(tmp)
 	for _, e := range tmp {
 		f(e)
 	}
@@ -39,7 +39,7 @@ func (b *randomLinkedListBag) ForEach(f func(interface{})) Bag  {
 
 // String returns formated string representing LinkedBag and its elements
 func (b *randomLinkedListBag) String() string  {
-	ret := "linked.randomLinkedListBag: ["
+	ret := "["
 	b.ForEach(func(e interface{}) {
 		ret+= fmt.Sprintf("%v ", e)
 	})

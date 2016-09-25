@@ -1,24 +1,25 @@
-package util
+package slice_test
 
 import (
 	"github.com/stretchr/testify/assert"
 	"testing"
+	"github.com/tornyak/goalg/util/slice"
 )
 
 func TestReverse(t *testing.T) {
 	var input []interface{}
 	var expected []interface{}
-	Reverse(input)
+	slice.Reverse(input)
 	assert.Equal(t, expected, input, "Reverse failed for empty slice")
 	input = append(input, 5)
-	Reverse(input)
+	slice.Reverse(input)
 	expected = append(expected, 5)
 	assert.Equal(t, expected, input, "Reverse failed for slice with one element")
 
 	input = make([]interface{}, 2)
 	input[0] = 5
 	input[1] = "Stockholm"
-	Reverse(input)
+	slice.Reverse(input)
 
 	expected = make([]interface{}, 2)
 	expected[0] = "Stockholm"
@@ -47,7 +48,7 @@ func TestRemove(t *testing.T) {
 	}
 
 	for id, mTest := range tests {
-		res, _ := Delete([]interface{}(mTest.A), mTest.I)
+		res, _ := slice.Delete([]interface{}(mTest.A), mTest.I)
 		assert.Equal(t, mTest.E, res, "TestRemove, id: %v Remove Fail", id)
 	}
 }

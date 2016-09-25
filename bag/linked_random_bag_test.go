@@ -11,10 +11,10 @@ func TestRandomBagIsEmpty(t *testing.T) {
 		bag      bag.Bag
 		expected bool // expected result
 	}{
-		{bag.RandomList(), true},
-		{bag.RandomList().Add("Hello"), false},
-		{bag.RandomList().Add("New York", "Stockholm", "London", "Paris"), false},
-		{bag.RandomList().Add("New York", 1.23, 1234567890, []int{1, 2, 3}), false},
+		{bag.RandomLinked(), true},
+		{bag.RandomLinked().Add("Hello"), false},
+		{bag.RandomLinked().Add("New York", "Stockholm", "London", "Paris"), false},
+		{bag.RandomLinked().Add("New York", 1.23, 1234567890, []int{1, 2, 3}), false},
 	}
 
 	for _, test := range isEmptyTests {
@@ -29,10 +29,10 @@ func TestRandomBagSize(t *testing.T) {
 		bag      bag.Bag
 		expected int
 	}{
-		{bag.RandomList(), 0},
-		{bag.RandomList().Add("Hello"), 1},
-		{bag.RandomList().Add("New York", "Stockholm", "London", "Paris"), 4},
-		{bag.RandomList().Add("New York", 1.23, 1234567890, []int{1, 2, 3}), 4},
+		{bag.RandomLinked(), 0},
+		{bag.RandomLinked().Add("Hello"), 1},
+		{bag.RandomLinked().Add("New York", "Stockholm", "London", "Paris"), 4},
+		{bag.RandomLinked().Add("New York", 1.23, 1234567890, []int{1, 2, 3}), 4},
 	}
 
 	for _, test := range sizeTests {
@@ -43,14 +43,14 @@ func TestRandomBagSize(t *testing.T) {
 }
 
 func TestRandomBagForEachEmpty(t *testing.T) {
-	b := bag.RandomList()
+	b := bag.RandomLinked()
 	b.ForEach(func(interface{}){
 		t.Error("Empty bag ForEach called function")
 	})
 }
 
 func TestRandomBagForEachOne(t *testing.T) {
-	b := bag.RandomList().Add(5)
+	b := bag.RandomLinked().Add(5)
 	i := 0
 	b.ForEach(func(e interface{}){
 		i++
@@ -64,7 +64,7 @@ func TestRandomBagForEachOne(t *testing.T) {
 }
 
 func TestRandomBagForEachMultiple(t *testing.T) {
-	b := bag.RandomList()
+	b := bag.RandomLinked()
 	cities := map[string]int{
 		"NewBag York": 1,
 		"Stockholm":   1,
@@ -92,8 +92,8 @@ func TestRandomBagString(t *testing.T) {
 		bag      bag.Bag
 		expected string
 	}{
-		{bag.RandomList(), "linked.randomLinkedListBag: []"},
-		{bag.RandomList().Add("Hello"), "linked.randomLinkedListBag: [Hello]"},
+		{bag.RandomLinked(), "[]"},
+		{bag.RandomLinked().Add("Hello"), "[Hello]"},
 	}
 
 	for _, test := range sizeTests {

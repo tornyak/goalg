@@ -3,7 +3,6 @@ package bag
 import (
 	"fmt"
 	"strings"
-	"reflect"
 )
 
 // element is an element of the Bag
@@ -20,7 +19,7 @@ type linkedListBag struct {
 }
 
 // NewLinkedBag creates an empty LinkedBag and returns pointer to it
-func List() Bag { return new(linkedListBag) }
+func Linked() Bag { return new(linkedListBag) }
 
 // Add an item to the bag
 func (b *linkedListBag) Add(items ...interface{}) Bag {
@@ -52,8 +51,7 @@ func (b *linkedListBag) ForEach(f func(interface{})) Bag {
 
 // String returns formatted string representing LinkedBag and its elements
 func (b *linkedListBag) String() string  {
-	t := reflect.TypeOf(b).Elem()
-	ret := fmt.Sprintf("%v: [", t)
+	ret := "["
 	b.ForEach(func(e interface{}) {
 		ret+= fmt.Sprintf("%v ", e)
 	})

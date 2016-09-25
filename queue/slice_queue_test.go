@@ -1,92 +1,125 @@
-package queue
+package queue_test
 
 import (
 	"testing"
-
-	"github.com/stretchr/testify/assert"
+	"github.com/tornyak/goalg/queue"
+	"fmt"
 )
 
-func TestSliceQueueCreateEmpty(t *testing.T) {
-	q := NewSliceQueue()
-	assert.True(t, q.IsEmpty(), "Stack not empty")
-	assert.Equal(t, q.Size(), 0, "Wrong queue size")
+
+func TestSliceQueueIsEmpty(t *testing.T) {
+	var isEmptyTests = []struct {
+		queue      queue.Queue
+		expected bool // expected result
+	}{
+		{queue.Slice(), true},
+		{queue.Slice().Enqueue("Hello"), false},
+		{queue.Slice().Enqueue("New York", "Stockholm", "London", "Paris"), false},
+		{queue.Slice().Enqueue("New York", 1.23, 1234567890, []int{1, 2, 3}), false},
+	}
+
+	for _, test := range isEmptyTests {
+		if test.queue.IsEmpty() != test.expected {
+			t.Errorf("IsEmpty() for Queue: %v, expected: %v, was: %v", test.queue, test.expected, test.queue.IsEmpty())
+		}
+	}
 }
 
-func TestSliceQueueEnqueueDequeueOne(t *testing.T) {
-	q := NewSliceQueue()
-	expected := "Stockholm"
-	q.Enqueue(expected)
-	assert.False(t, q.IsEmpty(), "Queue empty")
-	assert.Equal(t, q.Size(), 1, "Wrong Stack size")
+func TestSliceQueueSize(t *testing.T) {
+	var sizeTests = []struct {
+		queue      queue.Queue
+		expected int
+	}{
+		{queue.Slice(), 0},
+		{queue.Slice().Enqueue("Hello"), 1},
+		{queue.Slice().Enqueue("New York", "Stockholm", "London", "Paris"), 4},
+		{queue.Slice().Enqueue("New York", 1.23, 1234567890, []int{1, 2, 3}), 4},
+	}
 
-	e := q.Dequeue().(string)
-	assert.Equal(t, expected, e, "Dequeue returned wrong element")
+	for _, test := range sizeTests {
+		if test.queue.Size() != test.expected {
+			t.Errorf("Size() for Queue: %v, expected: %v, was: %v", test.queue, test.expected, test.queue.Size())
+		}
+	}
+}
+
+func TestSliceQueueDequeue(t *testing.T) {
+	var tests = []struct {
+		queue      queue.Queue
+		expected interface{}
+	}{
+		{queue.Slice(), nil},
+		{queue.Slice().Enqueue("Hello"), "Hello"},
+		{queue.Slice().Enqueue("New York", "Stockholm", "London", "Paris"), "New York"},
+		{queue.Slice().Enqueue(1234567890, "New York", 1.23, []int{1, 2, 3}), 1234567890},
+	}
+
+	for _, test := range tests {
+		deq := test.queue.Dequeue()
+		if deq != test.expected{
+			t.Errorf("Dequeue() for Queue: %v, expected: %v was: %v",
+				test.queue, test.expected, deq)
+		}
+	}
 }
 
 func TestSliceQueueDequeueMultiple(t *testing.T) {
-	q := NewSliceQueue()
+	q := queue.Slice()
 	cities := []string{"New York", "Stockholm", "Paris", "London"}
-	for _, city := range cities {
-		q.Enqueue(city)
-	}
-	assert.Equal(t, len(cities), q.Size(), "Wrong Size")
+	q.Enqueue("New York", "Stockholm", "Paris", "London")
 
 	for i := 0; !q.IsEmpty(); i++ {
-		city := q.Dequeue().(string)
-		assert.Equal(t, cities[i], city, "Dequeue returned wrong element")
+		deq := q.Dequeue()
+		if deq != cities[i]{
+			t.Errorf("Dequeue() for Queue: %v, expected: %v was: %v",
+				q, cities[i], deq)
+		}
+	}
+
+	if q.IsEmpty() != true {
+		t.Errorf("IsEmpty() for Queue: %v, expected: %v, was: %v", q, true, q.IsEmpty())
 	}
 
 	newCity := "Tokyo"
 	q.Enqueue(newCity)
-	assert.Equal(t, 1, q.Size(), "Wrong Size")
 
-	city := q.Dequeue().(string)
-	assert.Equal(t, newCity, city, "Dequeue returned wrong element")
-}
-
-func TestSliceQueueDequeueEmpty(t *testing.T) {
-	q := NewSliceQueue()
-	e := q.Dequeue()
-	assert.Nil(t, e)
-}
-
-func TestSliceQueueIterateEmpty(t *testing.T) {
-	q := NewSliceQueue()
-	it := q.GetIterator()
-	assert.Nil(t, it.Next(), "Iterator Next() returned wrong value")
-}
-
-func TestSliceQueueIterateOne(t *testing.T) {
-	q := NewSliceQueue()
-	e := "New York"
-	q.Enqueue(e)
-	it := q.GetIterator()
-	assert.Equal(t, e, it.Next(), "Iterator Next() returned wrong value")
-}
-
-func TestSliceQueueIterateMultiple(t *testing.T) {
-	q := NewSliceQueue()
-	cities := []string{"New York", "Stockholm", "Paris", "London"}
-	for _, city := range cities {
-		q.Enqueue(city)
+	if q.IsEmpty() != false {
+		t.Errorf("IsEmpty() for Queue: %v, expected: %v, was: %v", q, false, q.IsEmpty())
 	}
-	it := q.GetIterator()
-	i := 0
-	for it.HasNext() {
-		assert.Equal(t, cities[i], it.Next(), "Iterator Next() returned wrong value")
-		i++
+
+	if q.Size() != 1 {
+		t.Errorf("Size() for Queue: %v, expected: %v, was: %v", q, 1, q.Size())
+	}
+
+	deq := q.Dequeue()
+	if deq != newCity {
+		t.Errorf("Dequeue() for Queue: %v, expected: %v was: %v",
+			q, newCity, deq)
+	}
+
+	if q.IsEmpty() != true {
+		t.Errorf("IsEmpty() for Queue: %v, expected: %v, was: %v", q, true, q.IsEmpty())
+	}
+
+	if q.Size() != 0 {
+		t.Errorf("Size() for Queue: %v, expected: %v, was: %v", q, 0, q.Size())
 	}
 }
 
-func TestSliceQueueIterateNextNil(t *testing.T) {
-	q := NewSliceQueue()
-	cities := []string{"New York", "Stockholm", "Paris"}
-	for _, city := range cities {
-		q.Enqueue(city)
+func TestSliceQueueString(t *testing.T) {
+	var stringTests = []struct {
+		queue      queue.Queue
+		expected string
+	}{
+		{queue.Slice(), "[]"},
+		{queue.Slice().Enqueue("Hello"), "[Hello]"},
+		{queue.Slice().Enqueue("New York", "Stockholm", "London", "Paris"), "[New York Stockholm London Paris]"},
+		{queue.Slice().Enqueue("New York", 1.23, 1234567890, []int{1, 2, 3}), "[New York 1.23 1234567890 [1 2 3]]"},
 	}
-	it := q.GetIterator()
-	for it.HasNext() {
-		it.Next()
+
+	for _, test := range stringTests {
+		if fmt.Sprint(test.queue) != test.expected {
+			t.Errorf("String() for Queue: %v, expected: %v", test.queue, test.expected)
+		}
 	}
-	assert.Nil(t, it.Next(), "Iterator Next() returned wrong value")
 }

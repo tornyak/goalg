@@ -1,28 +1,28 @@
 package stack
 
-import "github.com/tornyak/goalg/stack"
+import "fmt"
+
 
 // Stack is a slice based Stack implementation
 // Implementation uses slice's inherent resizing support
-type Stack struct {
+type stack struct {
 	a []interface{}
 }
 
-// NewArrayStack creates and returns new
-// ArrayStack data structure of capacity 1
-func NewStack() Stack {
-	return &Stack{
+// Slice creates and returns a new empty slice backed stack
+func Slice() Stack {
+	return &stack{
 		a: make([]interface{}, 0),
 	}
 }
 
 // IsEmpty returns true if the Stack is empty, otherwise false
-func (s *Stack) IsEmpty() bool {
+func (s *stack) IsEmpty() bool {
 	return len(s.a) == 0
 }
 
 // Push adds item e to the top of the Stack
-func (s *Stack) Push(e ...interface{}) stack.Stack {
+func (s *stack) Push(e ...interface{}) Stack {
 	s.a = append(s.a, e...)
 	return s
 }
@@ -30,16 +30,21 @@ func (s *Stack) Push(e ...interface{}) stack.Stack {
 // Pop the item from the top of the stack.
 // Returns (nil, false) if stack is empty
 // otherwise (*topElement, true)
-func (s *Stack) Pop() (interface{}, bool) {
+func (s *stack) Pop() interface{} {
 	if len(s.a) == 0 {
-		return nil, false
+		return nil
 	}
 	e := s.a[len(s.a)-1]
 	s.a = s.a[:len(s.a)-1]
-	return e, true
+	return e
 }
 
 // Size returns number of items in the Stack
-func (s *Stack) Size() int {
+func (s *stack) Size() int {
 	return len(s.a)
+}
+
+// String returns formatted string representing stack and its elements
+func (s *stack) String() string  {
+	return fmt.Sprintf("%v", s.a)
 }

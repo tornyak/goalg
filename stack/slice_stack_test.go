@@ -7,15 +7,15 @@ import (
 )
 
 
-func TestLinkedStackIsEmpty(t *testing.T) {
+func TestSliceStackIsEmpty(t *testing.T) {
 	var isEmptyTests = []struct {
 		stack      stack.Stack
 		expected bool // expected result
 	}{
-		{stack.Linked(), true},
-		{stack.Linked().Push("Hello"), false},
-		{stack.Linked().Push("New York", "Stockholm", "London", "Paris"), false},
-		{stack.Linked().Push("New York", 1.23, 1234567890, []int{1, 2, 3}), false},
+		{stack.Slice(), true},
+		{stack.Slice().Push("Hello"), false},
+		{stack.Slice().Push("New York", "Stockholm", "London", "Paris"), false},
+		{stack.Slice().Push("New York", 1.23, 1234567890, []int{1, 2, 3}), false},
 	}
 
 	for _, test := range isEmptyTests {
@@ -25,15 +25,15 @@ func TestLinkedStackIsEmpty(t *testing.T) {
 	}
 }
 
-func TestLinkedStackSize(t *testing.T) {
+func TestSliceStackSize(t *testing.T) {
 	var sizeTests = []struct {
 		stack      stack.Stack
 		expected int
 	}{
-		{stack.Linked(), 0},
-		{stack.Linked().Push("Hello"), 1},
-		{stack.Linked().Push("New York", "Stockholm", "London", "Paris"), 4},
-		{stack.Linked().Push("New York", 1.23, 1234567890, []int{1, 2, 3}), 4},
+		{stack.Slice(), 0},
+		{stack.Slice().Push("Hello"), 1},
+		{stack.Slice().Push("New York", "Stockholm", "London", "Paris"), 4},
+		{stack.Slice().Push("New York", 1.23, 1234567890, []int{1, 2, 3}), 4},
 	}
 
 	for _, test := range sizeTests {
@@ -43,15 +43,15 @@ func TestLinkedStackSize(t *testing.T) {
 	}
 }
 
-func TestLinkedStackPop(t *testing.T) {
+func TestSliceStackPop(t *testing.T) {
 	var sizeTests = []struct {
 		stack      stack.Stack
 		expected interface{}
 	}{
-		{stack.Linked(), nil},
-		{stack.Linked().Push("Hello"), "Hello"},
-		{stack.Linked().Push("New York", "Stockholm", "London", "Paris"), "Paris"},
-		{stack.Linked().Push("New York", 1.23, []int{1, 2, 3}, 1234567890), 1234567890},
+		{stack.Slice(), nil},
+		{stack.Slice().Push("Hello"), "Hello"},
+		{stack.Slice().Push("New York", "Stockholm", "London", "Paris"), "Paris"},
+		{stack.Slice().Push("New York", 1.23, []int{1, 2, 3}, 1234567890), 1234567890},
 	}
 
 	for _, test := range sizeTests {
@@ -63,8 +63,8 @@ func TestLinkedStackPop(t *testing.T) {
 	}
 }
 
-func TestLinkedStackPopMultiple(t *testing.T) {
-	s := stack.Linked()
+func TestSliceStackPopMultiple(t *testing.T) {
+	s := stack.Slice()
 	cities := []string{"New York", "Stockholm", "Paris", "London"}
 	s.Push("New York", "Stockholm", "Paris", "London")
 
@@ -106,18 +106,18 @@ func TestLinkedStackPopMultiple(t *testing.T) {
 	}
 }
 
-func TestLinkedStackString(t *testing.T) {
-	var stringTest = []struct {
+func TestSliceStackString(t *testing.T) {
+	var stringTests = []struct {
 		stack      stack.Stack
 		expected string
 	}{
-		{stack.Linked(), "[]"},
-		{stack.Linked().Push("Hello"), "[Hello]"},
-		{stack.Linked().Push("New York", "Stockholm", "London", "Paris"), "[Paris London Stockholm New York]"},
-		{stack.Linked().Push("New York", 1.23, 1234567890, []int{1, 2, 3}), "[[1 2 3] 1234567890 1.23 New York]"},
+		{stack.Slice(), "[]"},
+		{stack.Slice().Push("Hello"), "[Hello]"},
+		{stack.Slice().Push("New York", "Stockholm", "London", "Paris"), "[New York Stockholm London Paris]"},
+		{stack.Slice().Push("New York", 1.23, 1234567890, []int{1, 2, 3}), "[New York 1.23 1234567890 [1 2 3]]"},
 	}
 
-	for _, test := range stringTest {
+	for _, test := range stringTests {
 		if fmt.Sprint(test.stack) != test.expected {
 			t.Errorf("String() for Stack: %v, expected: %v", test.stack, test.expected)
 		}

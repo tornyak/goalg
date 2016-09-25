@@ -92,10 +92,10 @@ func TestString(t *testing.T) {
 		bag      bag.Bag
 		expected string
 	}{
-		{bag.Slice(), "bag.sliceBag: []"},
-		{bag.Slice().Add("Hello"), "bag.sliceBag: [Hello]"},
-		{bag.Slice().Add("New York", "Stockholm", "London", "Paris"), "bag.sliceBag: [New York Stockholm London Paris]"},
-		{bag.Slice().Add("New York", 1.23, 1234567890, []int{1, 2, 3}), "bag.sliceBag: [New York 1.23 1234567890 [1 2 3]]"},
+		{bag.Slice(), "[]"},
+		{bag.Slice().Add("Hello"), "[Hello]"},
+		{bag.Slice().Add("New York", "Stockholm", "London", "Paris"), "[New York Stockholm London Paris]"},
+		{bag.Slice().Add("New York", 1.23, 1234567890, []int{1, 2, 3}), "[New York 1.23 1234567890 [1 2 3]]"},
 	}
 
 	for _, test := range sizeTests {
