@@ -1,18 +1,9 @@
-package sort
+package sorting
 
 import "sort"
 
-// Insertion sort
-func InsertionSort(data sort.Interface) {
-	for i := 0; i < data.Len(); i++ {
-		for j := i; j > 0 && data.Less(j, j-1); j-- {
-			data.Swap(j, j-1)
-		}
-	}
-}
-
 // ShellSort
-func ShellSort(data sort.Interface) {
+func Shell(data sort.Interface) {
 
 	N := data.Len()
 	h := 1

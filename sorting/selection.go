@@ -1,9 +1,9 @@
-package sort
+package sorting
 
 import "sort"
 
 // Selection sort
-func SelectionSort(data sort.Interface) {
+func Selection(data sort.Interface) {
 	dataLen := data.Len()
 	for i := 0; i < dataLen; i++ {
 		minIndex := i
