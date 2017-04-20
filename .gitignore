@@ -1,0 +1,5 @@
+#intelliJ
+.idea/*
+
+.DS_Store
+*~

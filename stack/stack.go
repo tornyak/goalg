@@ -10,3 +10,6 @@ type Stack interface {
 	IsEmpty() bool
 	Size() int
 }
+
+
+

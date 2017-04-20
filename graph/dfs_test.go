@@ -2,7 +2,7 @@ package graph
 
 import (
 	"testing"
-	"github.com/tornyak/goalg/util"
+	"reflect"
 )
 
 func TestDFS(t *testing.T) {
@@ -43,7 +43,7 @@ func TestDFS(t *testing.T) {
 	}
 
 	for _, pt := range pathTests {
-		if  util.EqualInt(PathTo(0, pt.vertex, marked, edgeTo), pt.expected) {
+		if  reflect.DeepEqual(PathTo(0, pt.vertex, marked, edgeTo), pt.expected) {
 			t.Errorf("marked[%d] expected: %v, was: %v")
 		}
 	}

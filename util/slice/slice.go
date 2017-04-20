@@ -62,15 +62,46 @@ func Delete(a []interface{}, i int) ([]interface{}, error) {
 	return a, nil
 }
 
+func DeleteInt(a []int, i int) ([]int, error) {
+	if i < 0 || i >= len(a) {
+		return a, fmt.Errorf("Index out of range: %v, len: %v", i, len(a))
+	}
+
+	copy(a[i:], a[i+1:])
+	a[len(a)-1] = 0 // or the zero value of T
+	a = a[:len(a)-1]
+	return a, nil
+}
+
+// CopyInt returns a copy of slice a
+func CopyInt(a []int) []int {
+	aCopy := make([]int, len(a))
+	copy(aCopy, a)
+	return aCopy
+}
+
 
 func EqualInt(a, b []int) bool {
-	if a == nil && b == nil {
-		return true
-	}
 
 	if len(a) != len (b) {
 		return false
 	}
+
+	if (a == nil) != (b == nil) {
+		return false
+	}
+
+	if len(a) == 0 {
+		return true
+	}
+
+
+	if &a[0] == &b[0] {
+		return true
+	}
+
+	b = b[:len(a)] // To use BCE (Boundary Check Elimination)
+	// TODO if it does not work use range
 	for i := 0; i < len(a); i++ {
 		if a[i] != b[i] {
 			return false
